@@ -370,7 +370,16 @@ namespace XamlBrewer.SqlClient
             try
             {
                 var localSettings = ApplicationData.Current.LocalSettings;
-                var fullString = localSettings.Values["SqlConnectionDialogServers"].ToString();
+                Object lsValue = localSettings.Values["SqlConnectionDialogServers"];
+                var fullString = "";
+                if (lsValue == null)
+                {
+                    localSettings.Values["SqlConnectionDialogServers"] = "";
+                }
+                else
+                {
+                    fullString = lsValue.ToString();
+                }
                 return fullString.Split("###").ToList();
             }
             catch (Exception)
